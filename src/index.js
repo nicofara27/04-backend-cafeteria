@@ -1,4 +1,9 @@
 import express from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
+import path from 'path'
+//Llamar a la conexion a la BD
+import './database'
 
 //Crear una instancia de express
 const app = express();  
@@ -10,5 +15,16 @@ app.listen(app.get('port'), ()=>{
 });
 
 //middlewares: funciones que se ejecutan antes de llegar a las rutas
+app.use(cors()); //Permite peticiones remotas
+//Permite recibir y usar objetos en formato json
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));//Descarga el formato json y lo interpreta
+//Informacion extra
+app.use(morgan('dev'))
+//Cargar un archivo estatico
+app.use(express.static(path.join(__dirname, '../public')))
 
-//rutas: 
+//rutas:
+app.get('/prueba', (req, res)=>{
+    res.send('desde el backend en la peticion get')
+}) 
