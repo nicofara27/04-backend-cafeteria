@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import path from 'path'
+import productoRouter from './routes/productos.routes'
 //Llamar a la conexion a la BD
 import './database'
 
@@ -25,6 +26,9 @@ app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, '../public')))
 
 //rutas:
-app.get('/prueba', (req, res)=>{
-    res.send('desde el backend en la peticion get')
-}) 
+// app.get('/prueba', (req, res)=>{
+//     res.send('desde el backend en la peticion get')
+// }) 
+
+//La direccion seria http://localhost/4000/apicafe/prueba
+app.use('/apicafe', productoRouter)
