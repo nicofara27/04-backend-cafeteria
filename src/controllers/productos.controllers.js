@@ -70,3 +70,19 @@ export const editarProducto = async (req, res) => {
     })    
   }
 }
+export const borrarProducto = async (req, res) => {
+  try {
+    //Obtener el parametro req.params.id
+    //Borrar el producto en la BD
+    await Producto.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      mensaje:'El producto fue eliminado correctamente'
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ //Eror 400 bad request
+      mensaje:'Error al intentar borrar un producto'
+    })    
+  }
+}
