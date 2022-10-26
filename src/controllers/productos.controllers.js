@@ -15,6 +15,22 @@ export const listarProductos = async (req, res) => {
     });
   }
 };
+export const obtenerProducto = async (req, res) => {
+  try {
+    //Obtener el parametro
+    console.log(req.params.id)
+    //Buscar en la base de datos el producto que coincide con el parametro
+    const productoBuscado = await Producto.findById()
+    //Responder al frontend
+    res.status(200).json(productoBuscado)
+  } catch (error) {
+    console.log(error);
+    //Enviar respuesta al frontend
+    res.status(404).json({
+      mensaje:'Error al buscar el producto'
+    });
+  }
+};
 
 export const crearProducto = async (req, res) => {
   try {
