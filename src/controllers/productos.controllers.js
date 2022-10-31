@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Producto from "../models/producto";
 
 export const listarProductos = async (req, res) => {
@@ -20,7 +21,7 @@ export const obtenerProducto = async (req, res) => {
     //Obtener el parametro
     console.log(req.params.id)
     //Buscar en la base de datos el producto que coincide con el parametro
-    const productoBuscado = await Producto.findById()
+    const productoBuscado = await Producto.findById(req.params.id)
     //Responder al frontend
     res.status(200).json(productoBuscado)
   } catch (error) {
@@ -34,6 +35,15 @@ export const obtenerProducto = async (req, res) => {
 
 export const crearProducto = async (req, res) => {
   try {
+    //  manejar los errores de las validaciones
+    const errors = validationResult(req)
+    // errors.isEmpty() devuekve false cuando hay errores
+    if(!errors.isEmpty()){
+      return res.status(400).json({
+        errors: errors.array()
+      })
+    }
+
     console.log(req.body);
     //Validar los adtos del objeto
     const productoNuevo = new Producto(req.body);
