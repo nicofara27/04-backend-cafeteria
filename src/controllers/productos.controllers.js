@@ -69,7 +69,7 @@ export const editarProducto = async (req, res) => {
     //Obtener datos del body validados (req.body)
     //Actualizar el producto en la BD
     await Producto.findByIdAndUpdate(req.params.id, req.body);
-    req.status(200).json({
+    res.status(200).json({
       mensaje:'El producto fue actualizado correctamente'
     });
 
